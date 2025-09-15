@@ -1,4 +1,8 @@
 // ===== Plate with Hole (Parametric) =====
+// Pattern variables
+pattern_x_count = 3;      // Number of plates in X direction
+pattern_y_count = 5;      // Number of plates in Y direction
+
 // Tunables
 plate_len      = 20;     // X size of plate
 plate_wid      = 30;      // Y size of plate
@@ -40,8 +44,20 @@ module plate_with_hole(len, wid, thk, hole_d, hole_pos, centered=false) {
     }
 }
 
-// Render
-plate_with_hole(plate_len, plate_wid, plate_thk, hole_diameter, hole_xy, center_plate);
+// ---- Pattern generation ----
+module plate_pattern(x_count, y_count, len, wid, thk, hole_d, hole_pos, centered=false) {
+    union() {
+        for (x = [0:x_count-1]) {
+            for (y = [0:y_count-1]) {
+                translate([x * len, y * wid, 0])
+                    plate_with_hole(len, wid, thk, hole_d, hole_pos, centered);
+            }
+        }
+    }
+}
+
+// Render the pattern
+plate_pattern(pattern_x_count, pattern_y_count, plate_len, plate_wid, plate_thk, hole_diameter, hole_xy, center_plate);
 
 /*
 Quick tips:

@@ -1,0 +1,20 @@
+{
+  "name": "gridpockets",
+  "version": "2.1.0",
+  "description": "Parametric grid pattern of plates with holes for 3D printing",
+  "scripts": {
+    "export": "node export.js",
+    "export:stl": "node export.js stl",
+    "export:png": "node export.js png",
+    "clean": "rm -f *.stl *.png",
+    "help": "node export.js help"
+  },
+  "keywords": [
+    "openscad",
+    "3d-printing",
+    "parametric",
+    "grid"
+  ],
+  "author": "",
+  "license": "MIT"
+}
