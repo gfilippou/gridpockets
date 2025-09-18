@@ -8,5 +8,5 @@ module triangular_prism(width, height, depth) {
 
 triangular_prism(sizeMm, sizeMm, size2Mm);
 
-translate([0, 0, size2Mm])
+translate([0, 0, -size2Mm])
   triangular_prism(size2Mm, size2Mm, size2Mm);
