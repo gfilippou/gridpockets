@@ -1,5 +1,3 @@
-// ===== Plate with Hole (Parametric) =====
-// Pattern variables
 pattern_x_count = 3;      // Number of plates in X direction
 pattern_y_count = 5;      // Number of plates in Y direction
 
@@ -17,7 +15,7 @@ center_plate   = false;   // If true: hole_xy is relative to plate center
 $fn = 96;                 // Smoothness for circles/cylinders
 
 // Import validation functions
-use <assertions.scad>
+use <validations.scad>
 
 // Validate hole placement
 validate_hole_placement(hole_xy, hole_diameter, plate_len, plate_wid, center_plate);
@@ -49,23 +47,3 @@ module plate_pattern(x_count, y_count, len, wid, thk, hole_d, hole_pos, centered
 
 // Render the pattern
 plate_pattern(pattern_x_count, pattern_y_count, plate_len, plate_wid, plate_thk, hole_diameter, hole_xy, center_plate);
-
-/*
-Quick tips:
-- Set center_plate=true to position the hole from the plate center.
-  Example: hole_xy = [0, 0] puts the hole dead center.
-- Coordinates when center_plate=false:
-  hole_xy = [0, 0] is the lower-left corner of the plate.
-- Want rounded corners? Replace the cube with a rounded 2D rect + linear_extrude:
-
-module rounded_plate(len, wid, thk, fillet=3) {
-    linear_extrude(thk)
-        offset(r=fillet)
-            offset(r=-fillet)
-                square([len, wid], center=true);
-}
-
-and in the difference() use:
-translate([0,0,0]) rounded_plate(len, wid, thk, fillet=3);
-(remember to keep centered placement consistent)
-*/
