@@ -16,20 +16,11 @@ center_plate   = false;   // If true: hole_xy is relative to plate center
 // Optional niceness
 $fn = 96;                 // Smoothness for circles/cylinders
 
-// ---- Helper: sanity checks so the hole stays inside the plate ----
-hole_r = hole_diameter/2;
+// Import validation functions
+use <assertions.scad>
 
-function plate_min_xy(centered) = centered ? [-plate_len/2, -plate_wid/2] : [0, 0];
-function plate_max_xy(centered) = centered ? [ plate_len/2,  plate_wid/2] : [plate_len, plate_wid];
-
-min_xy = plate_min_xy(center_plate);
-max_xy = plate_max_xy(center_plate);
-
-// Require the hole center to be at least its radius from each edge
-assert(hole_xy[0] >= min_xy[0] + hole_r, "Hole too close to left edge.");
-assert(hole_xy[0] <= max_xy[0] - hole_r, "Hole too close to right edge.");
-assert(hole_xy[1] >= min_xy[1] + hole_r, "Hole too close to bottom edge.");
-assert(hole_xy[1] <= max_xy[1] - hole_r, "Hole too close to top edge.");
+// Validate hole placement
+validate_hole_placement(hole_xy, hole_diameter, plate_len, plate_wid, center_plate);
 
 // ---- Main model ----
 module plate_with_hole(len, wid, thk, hole_d, hole_pos, centered=false) {

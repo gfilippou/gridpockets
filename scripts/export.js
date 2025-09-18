@@ -55,6 +55,7 @@ function showHelp() {
   console.log('=======================');
   console.log('');
   console.log('Available commands:');
+  console.log('  npm run compile     - Check compilation for errors');
   console.log('  npm run export      - Export to STL (default)');
   console.log('  npm run export:stl  - Export to STL format');
   console.log('  npm run export:png  - Export to PNG image');
@@ -62,6 +63,7 @@ function showHelp() {
   console.log('  npm run help        - Show this help');
   console.log('');
   console.log('Direct usage:');
+  console.log('  node compile.js     - Check compilation');
   console.log('  node export.js [format]');
   console.log('  node export.js stl');
   console.log('  node export.js png');

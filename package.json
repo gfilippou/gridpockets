@@ -3,11 +3,9 @@
   "version": "2.1.0",
   "description": "Parametric grid pattern of plates with holes for 3D printing",
   "scripts": {
-    "export": "node export.js",
-    "export:stl": "node export.js stl",
-    "export:png": "node export.js png",
-    "clean": "rm -f *.stl *.png",
-    "help": "node export.js help"
+    "compile": "node scripts/compile.js",
+    "export": "node scripts/export.js stl",
+    "clean": "rm -f *.stl *.png"
   },
   "keywords": [
     "openscad",
