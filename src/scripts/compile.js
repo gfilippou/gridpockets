@@ -6,7 +6,6 @@ const os = require('os');
 const path = require('path');
 
 const OPENSCAD_PATH = '/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD';
-const INPUT_FILE = 'test.scad';
 
 function checkOpenSCAD() {
   if (!fs.existsSync(OPENSCAD_PATH)) {
@@ -15,25 +14,25 @@ function checkOpenSCAD() {
   }
 }
 
-function checkInputFile() {
-  if (!fs.existsSync(INPUT_FILE)) {
-    console.error(`❌ Error: Input file '${INPUT_FILE}' not found`);
+function checkInputFile(inputFile) {
+  if (!fs.existsSync(inputFile)) {
+    console.error(`❌ Error: Input file '${inputFile}' not found`);
     process.exit(1);
   }
 }
 
-function compileCheck() {
+function compileCheck(inputFile) {
   checkOpenSCAD();
-  checkInputFile();
+  checkInputFile(inputFile);
 
   // Create a temporary file in the system temp directory
   const tempFile = path.join(os.tmpdir(), 'openscad_compile_check.stl');
 
-  console.log(`🔍 Checking compilation of ${INPUT_FILE}...`);
+  console.log(`🔍 Checking compilation of ${inputFile}...`);
   console.log(`📍 Using OpenSCAD at: ${OPENSCAD_PATH}`);
 
   try {
-    const command = `"${OPENSCAD_PATH}" -o "${tempFile}" "${INPUT_FILE}"`;
+    const command = `"${OPENSCAD_PATH}" -o "${tempFile}" "${inputFile}"`;
     const output = execSync(command, {
       encoding: 'utf8',
       stdio: ['pipe', 'pipe', 'pipe']
@@ -78,7 +77,27 @@ function compileCheck() {
   }
 }
 
+function showHelp() {
+  console.log('GridPockets Compile Check');
+  console.log('========================');
+  console.log('');
+  console.log('Usage:');
+  console.log('  node compile.js <file.scad>');
+  console.log('  npm run compile <file.scad>');
+  console.log('');
+  console.log('Example:');
+  console.log('  node compile.js src/test/test.scad');
+  console.log('  npm run compile src/test/test.scad');
+}
+
 // Main execution
+const inputFile = process.argv[2];
+
+if (!inputFile || inputFile === 'help' || inputFile === '--help' || inputFile === '-h') {
+  showHelp();
+  process.exit(inputFile ? 0 : 1);
+}
+
 console.log('GridPockets Compile Check');
 console.log('========================');
-compileCheck(); 
+compileCheck(inputFile); 
